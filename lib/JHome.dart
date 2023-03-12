@@ -40,13 +40,6 @@ class _JHomeState extends State<JHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Center(
-            child: Text(
-          "Posts",
-        )),
-      ),
       drawer: Drawer(
         backgroundColor: Colors.grey,
         child: ListView(

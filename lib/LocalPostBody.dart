@@ -53,112 +53,128 @@ class _LocalPostState extends State<LocalPost> {
     getUserPost();
     getUserComnt();
     return Scaffold(
-      body: FutureBuilder(
-          future: getUserPost(),
-          builder: (_, userPost) {
-            if (userPost.hasData) {
-              return ListView.builder(
-                itemCount: userPost.data.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Card(
-                      color: Colors.white60,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.all(10),
-                              alignment: AlignmentDirectional.topStart,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: CircleAvatar(
-                                      backgroundImage:
-                                          AssetImage("assets/images/1.jpg"),
+        body: Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        Image(
+          image: AssetImage("assets/images/bg4.jpg"),
+          fit: BoxFit.cover,
+          // color: Colors.black12,
+          // colorBlendMode: BlendMode.darken,
+        ),
+        FutureBuilder(
+            future: getUserPost(),
+            builder: (_, userPost) {
+              if (userPost.hasData) {
+                return ListView.builder(
+                  itemCount: userPost.data.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Card(
+                        color: Color(0xff6b0d21).withOpacity(0.5),
+                        margin: EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                                padding: EdgeInsets.all(10),
+                                alignment: AlignmentDirectional.topStart,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            AssetImage("assets/images/1.jpg"),
+                                      ),
                                     ),
+                                    Container(
+                                        padding: EdgeInsets.all(5),
+                                        alignment:
+                                            AlignmentDirectional.topStart,
+                                        child: Text(
+                                          " ${LocalLogin.myUserList[0]["username"]}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ],
+                                )),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(5),
+                              alignment: AlignmentDirectional.topCenter,
+                              child: Text(
+                                " ${userPost.data[index]["title"]}",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              alignment: AlignmentDirectional.topCenter,
+                              child: Text(
+                                "${userPost.data[index]["body"]}",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(20),
+                              height: 20,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.thumb_up),
                                   ),
-                                  Container(
-                                      padding: EdgeInsets.all(5),
-                                      alignment: AlignmentDirectional.topStart,
-                                      child: Text(
-                                        " ${LocalLogin.myUserList[0]["username"]}",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ],
-                              )),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.all(5),
-                            alignment: AlignmentDirectional.topCenter,
-                            child: Text(
-                              " ${userPost.data[index]["title"]}",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            alignment: AlignmentDirectional.topCenter,
-                            child: Text(
-                              "${userPost.data[index]["body"]}",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            height: 20,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.thumb_up),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      for (int i = 0;
-                                          i < userPost.data.length;
-                                          i++) {
-                                        if (userPost.data[index]["userId"] ==
-                                            comntDataJson[i]["postId"]) {
-                                          LocalPost.mycomnts
-                                              .add(comntDataJson[i]);
-                                          print("${LocalPost.mycomnts}");
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LocalComments()));
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        for (int i = 0;
+                                            i < userPost.data.length;
+                                            i++) {
+                                          if (userPost.data[index]["userId"] ==
+                                              comntDataJson[i]["postId"]) {
+                                            LocalPost.mycomnts
+                                                .add(comntDataJson[i]);
+                                            print("${LocalPost.mycomnts}");
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LocalComments()));
+                                          }
                                         }
-                                      }
-                                    });
-                                  },
-                                  icon: Icon(Icons.comment),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.share),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                                      });
+                                    },
+                                    icon: Icon(Icons.comment),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.share),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          }),
-    );
+                    );
+                  },
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            }),
+      ],
+    ));
   }
 }

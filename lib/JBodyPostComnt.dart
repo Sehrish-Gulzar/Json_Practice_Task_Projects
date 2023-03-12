@@ -53,128 +53,145 @@ class _JsonBodyState extends State<JsonBody> {
     getUserPost();
     getUserComnt();
     return Scaffold(
-      body: FutureBuilder(
-          future: getUserPost(),
-          builder: (_, userPost) {
-            if (userPost.hasData) {
-              return ListView.builder(
-                itemCount: userPost.data.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Card(
-                      color: Colors.white60,
-                      margin: EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.all(10),
-                              alignment: AlignmentDirectional.topStart,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 70,
-                                    width: 70,
-                                    child: CircleAvatar(
-                                      backgroundImage:
-                                          AssetImage("assets/images/1.jpg"),
-                                    ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        // padding: EdgeInsets.all(5),
-                                        alignment:
-                                            AlignmentDirectional.topStart,
-                                        child: Text(
-                                          " ${JsonLogin.myUserList[0]["name"]}",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+      appBar: AppBar(
+        backgroundColor: Colors.purple[200],
+        title: Center(child: Text("Posts")),
+      ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Image(
+            image: new AssetImage("assets/images/bg1.jpg"),
+            fit: BoxFit.cover,
+            // color: Colors.black12,
+            // colorBlendMode: BlendMode.darken,
+          ),
+          FutureBuilder(
+            future: getUserPost(),
+            builder: (_, userPost) {
+              if (userPost.hasData) {
+                return ListView.builder(
+                  itemCount: userPost.data.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Card(
+                        color: Colors.white60,
+                        margin: EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                                padding: EdgeInsets.all(10),
+                                alignment: AlignmentDirectional.topStart,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            AssetImage("assets/images/1.jpg"),
                                       ),
-                                      Container(
-                                          padding: EdgeInsets.all(5),
+                                    ),
+                                    Column(
+                                      children: [
+                                        Container(
+                                          // padding: EdgeInsets.all(5),
                                           alignment:
                                               AlignmentDirectional.topStart,
                                           child: Text(
-                                            " ${JsonLogin.myUserList[0]["username"]}",
+                                            " ${JsonLogin.myUserList[0]["name"]}",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
-                                          )),
-                                    ],
+                                          ),
+                                        ),
+                                        Container(
+                                            padding: EdgeInsets.all(5),
+                                            alignment:
+                                                AlignmentDirectional.topStart,
+                                            child: Text(
+                                              " ${JsonLogin.myUserList[0]["username"]}",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(5),
+                              alignment: AlignmentDirectional.topCenter,
+                              child: Text(
+                                " ${userPost.data[index]["title"]}",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              alignment: AlignmentDirectional.topCenter,
+                              child: Text(
+                                "${userPost.data[index]["body"]}",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(20),
+                              height: 20,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.thumb_up),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        for (int i = 0;
+                                            i < userPost.data.length;
+                                            i++) {
+                                          if (userPost.data[index]["userId"] ==
+                                              comntDataJson[i]["postId"]) {
+                                            JsonBody.mycomnts
+                                                .add(comntDataJson[i]);
+                                            print("${JsonBody.mycomnts}");
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MyComments()));
+                                          }
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(Icons.comment),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.share),
                                   ),
                                 ],
-                              )),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.all(5),
-                            alignment: AlignmentDirectional.topCenter,
-                            child: Text(
-                              " ${userPost.data[index]["title"]}",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            alignment: AlignmentDirectional.topCenter,
-                            child: Text(
-                              "${userPost.data[index]["body"]}",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            height: 20,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.thumb_up),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      for (int i = 0;
-                                          i < userPost.data.length;
-                                          i++) {
-                                        if (userPost.data[index]["userId"] ==
-                                            comntDataJson[i]["postId"]) {
-                                          JsonBody.mycomnts
-                                              .add(comntDataJson[i]);
-                                          print("${JsonBody.mycomnts}");
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MyComments()));
-                                        }
-                                      }
-                                    });
-                                  },
-                                  icon: Icon(Icons.comment),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.share),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          }),
+                    );
+                  },
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ],
+      ),
     );
   }
 }
