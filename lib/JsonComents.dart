@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:json_projects/LocalPostBody.dart';
+import 'package:json_projects/JBodyPostComnt.dart';
 
-class LocalComments extends StatefulWidget {
-  const LocalComments({Key? key}) : super(key: key);
+class MyComments extends StatefulWidget {
+  const MyComments({Key? key}) : super(key: key);
 
   @override
-  State<LocalComments> createState() => _LocalCommentsState();
+  State<MyComments> createState() => _MyCommentsState();
 }
 
-class _LocalCommentsState extends State<LocalComments> {
+class _MyCommentsState extends State<MyComments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff6b0d21).withOpacity(0.60),
+        backgroundColor: Colors.purple[200],
         title: Center(child: Text("Comments")),
       ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
           Image(
-            image: AssetImage("assets/images/bg4.jpg"),
+            image: new AssetImage("assets/images/bg1.jpg"),
             fit: BoxFit.cover,
             // color: Colors.black12,
             // colorBlendMode: BlendMode.darken,
           ),
           ListView.builder(
-              itemCount: LocalPost.mycomnts.length,
+              itemCount: JsonBody.mycomnts.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Card(
-                    color: Color(0xff6b0d21).withOpacity(0.5),
+                    color: Colors.white60,
                     child: Container(
                       child: ListTile(
                         title: Column(
@@ -40,22 +40,16 @@ class _LocalCommentsState extends State<LocalComments> {
                               margin: EdgeInsets.all(10),
                               alignment: AlignmentDirectional.topStart,
                               child: Text(
-                                "${LocalPost.mycomnts[index]["name"]}",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    // fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                "${JsonBody.mycomnts[index]["name"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
                               margin: EdgeInsets.all(10),
                               alignment: AlignmentDirectional.topStart,
                               child: Text(
-                                "${LocalPost.mycomnts[index]["email"]}",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    // fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                "${JsonBody.mycomnts[index]["email"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -63,11 +57,8 @@ class _LocalCommentsState extends State<LocalComments> {
                         subtitle: Container(
                           margin: EdgeInsets.all(10),
                           child: Text(
-                            "${LocalPost.mycomnts[index]["body"]}",
-                            style: TextStyle(
-                                fontSize: 20,
-                                // fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            "${JsonBody.mycomnts[index]["body"]}",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
